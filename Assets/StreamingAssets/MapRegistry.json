@@ -1,0 +1,302 @@
+{
+    "maps":[
+    {
+        "mapName": "TestMap",
+        "nodes":[
+            {
+                "nodeType": "Default",
+                "nodeName": "1",
+                "description": "",
+                "milage": 0,
+                "chain": 0,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Default",
+                "nodeName": "2",
+                "description": "",
+                "milage": 0,
+                "chain": 0,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Station",
+                "nodeName": "A - Platform 1",
+                "description": "",
+                "milage": 0,
+                "chain": 2,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Station",
+                "nodeName": "A - Platform 2",
+                "description": "",
+                "milage": 0,
+                "chain": 2,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "3",
+                "description": "",
+                "milage": 0,
+                "chain": 79,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "4",
+                "description": "",
+                "milage": 0,
+                "chain": 79,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Junction",
+                "nodeName": "A - East Junction",
+                "description": "",
+                "milage": 1,
+                "chain": 1,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Junction",
+                "nodeName": "B - West Junction",
+                "description": "",
+                "milage": 2,
+                "chain": 1,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "5",
+                "description": "",
+                "milage": 2,
+                "chain": 3,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "6",
+                "description": "",
+                "milage": 2,
+                "chain": 3,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Station",
+                "nodeName": "B - Platform 1",
+                "description": "",
+                "milage": 2,
+                "chain": 50,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "7",
+                "description": "",
+                "milage": 2,
+                "chain": 60,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "8",
+                "description": "",
+                "milage": 2,
+                "chain": 60,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Junction",
+                "nodeName": "B - East Junction",
+                "description": "",
+                "milage": 2,
+                "chain": 65,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Junction",
+                "nodeName": "C - West Junction",
+                "description": "",
+                "milage": 3,
+                "chain": 70,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "9",
+                "description": "",
+                "milage": 3,
+                "chain": 72,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Signal",
+                "nodeName": "10",
+                "description": "",
+                "milage": 3,
+                "chain": 72,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Station",
+                "nodeName": "C - Platform 1",
+                "description": "",
+                "milage": 4,
+                "chain": 0,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Station",
+                "nodeName": "C - Platform 2",
+                "description": "",
+                "milage": 4,
+                "chain": 0,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            },
+            {
+                "nodeType": "Default",
+                "nodeName": "11",
+                "description": "",
+                "milage": 4,
+                "chain": 5,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 0
+            },
+            {
+                "nodeType": "Default",
+                "nodeName": "12",
+                "description": "",
+                "milage": 4,
+                "chain": 5,
+                "connections":[
+                    {
+                        "nodeName": "",
+                        "speed": 0
+                    }
+                ],
+                "layoutRowReference": 1
+            }
+        ]
+    }]
+}    
