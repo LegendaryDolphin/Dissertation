@@ -10,3 +10,14 @@
 - Added a node registry, which loads JSON map data and creates Node instances.
 
 **version 0.2.0 - 22/10/2026**
+
+- Added connections to nodes.
+- Added instatiation of track segments.
+- Added foundation visuals for track segments.
+- Added node and track ids.
+- Made changes to the resource registry. Separation of file reading and loading.
+- Made changes to track data structure.
+	- Direction and allocation variables.
+- Made changes to the 'test map' in the MapRegistry JSON.
+	- Added all connections.
+
