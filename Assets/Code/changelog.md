@@ -8,3 +8,5 @@
 	- Includes text labels.
 	- Includes node markers.
 - Added a node registry, which loads JSON map data and creates Node instances.
+
+**version 0.2.0 - 22/10/2026**
