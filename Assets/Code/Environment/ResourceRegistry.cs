@@ -36,6 +36,8 @@ public class ResourceRegistry: MonoBehaviour
         public NodeConnection[] connections;
         public int layoutRowReference;
         public int layoutColumnReference;
+        public string signalType;
+        public string signalDirection;
     }
 
     [System.Serializable]
@@ -68,6 +70,9 @@ public class ResourceRegistry: MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, "MapRegistry.json");
 
         string json = File.ReadAllText(path);
+
+        Debug.Log($"JSON contains signalType: {json.Contains("\"signalType\"")}");
+        Debug.Log($"Raw JSON:\n{json}");
 
         mapDatabase = JsonUtility.FromJson<MapDatabase>(json);
 
@@ -110,15 +115,22 @@ public class ResourceRegistry: MonoBehaviour
         foreach (MapNode nodeData in mapData.nodes)
         {
             //Create node instances here.
+            NodeData data = CreateNodeData(nodeData);
+            NodeBase nodeBase;
 
             switch (nodeData.nodeType)
             {
                 case "Default":
-                    CreateDefaultNode(nodeData);
+                    nodeBase = CreateNode<NodeBase>(nodeData, data);
                     break;
 
-                //case "Signal":
-                //    break;
+                case "Signal":
+                    nodeBase = CreateNode<Signal>(nodeData, data);
+                    if(nodeBase is Signal signalInstance)
+                    {
+                        AddSignalData(nodeData, signalInstance);
+                    }
+                    break;
 
                 //case "Station":
                 //    break;
@@ -127,7 +139,7 @@ public class ResourceRegistry: MonoBehaviour
                 //    break;
 
                 default:
-                    CreateDefaultNode(nodeData);
+                    nodeBase = CreateNode<NodeBase>(nodeData, data);
                     break;
             }
         }
@@ -159,7 +171,7 @@ public class ResourceRegistry: MonoBehaviour
         }
     }
 
-    private void CreateDefaultNode(MapNode data)
+    private NodeData CreateNodeData(MapNode data)
     {
         NodeData nodeData = new NodeData
         {
@@ -179,12 +191,59 @@ public class ResourceRegistry: MonoBehaviour
             nodeData.speeds[i] = data.connections[i].speed;
         }
 
+        return nodeData;
+    }
+
+    private NodeBase CreateNode<T>(MapNode data, NodeData nodeData) where T : NodeBase
+    {
         GameObject nodeObject = new GameObject(System.Convert.ToString(data.nodeID));
-        Node nodeInstance = nodeObject.AddComponent<Node>();
+        NodeBase nodeInstance = nodeObject.AddComponent<T>();
 
         nodeInstance.InitializeNode(nodeData, data.layoutRowReference, data.layoutColumnReference);
 
         AddToNodeRegister(nodeInstance, nodeData);
+
+        return nodeInstance;
+    }
+
+    private void AddSignalData(MapNode data, Signal signalInstance)
+    {
+        SignalData signalData = new SignalData
+        {
+            aspect = SignalAspect.aspectRed,
+        };
+
+        Debug.Log($"{data.signalType}");
+
+        switch (data.signalType)
+        {
+            case "2":
+                signalData.signalType = SignalType.aspect2;
+                break;
+            case "3":
+                signalData.signalType = SignalType.aspect3;
+                break;
+            case "4":
+                signalData.signalType = SignalType.aspect4;
+                break;
+        }
+
+        Debug.Log(
+            $"Signal {data.nodeID}: JSON type = {data.signalType}, " +
+            $"assigned type = {signalData.signalType}"
+        );
+
+        //Signals are NEVER bidirectional
+        if (data.signalDirection == "UP")
+        {
+            signalData.signalDirection = NodeOperatingDirection.up;
+        }
+        else
+        {
+            signalData.signalDirection = NodeOperatingDirection.down;
+        }
+
+        signalInstance.SetSignalData(signalData);
     }
 
     private void AddToNodeRegister(NodeBase nodeToAdd, NodeData data)

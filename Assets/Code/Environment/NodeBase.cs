@@ -22,22 +22,31 @@ public struct NodeData
     public int[] speeds; //Array of speeds corresponding to the connections array.
 }
 
+//Used for junctions and signals
+public enum NodeOperatingDirection
+{
+    up,
+    down,
+    bidirectional
+}
+
 public interface INode
 {
     void InitializeNode(NodeData data, int layoutRow, int layoutColumn);
+    void InitializeVisuals();
 }
 
-public abstract class NodeBase: MonoBehaviour, INode
+public class NodeBase: MonoBehaviour, INode
 {
     private const float LAYOUT_SCALING_VALUE_X = 1f; //This value is used to scale the layout row number to world position. Adjust as needed.
     private const float LAYOUT_SCALING_VALUE_Y = 1f; //This value is used to scale the layout row number to world position. Adjust as needed.
 
     private const float LAYOUT_REALISTIC_SCALING_X = 12f;
 
-    private Vector2 worldPosition;
-    private GameObject nodeGO;
-    private NodeVisualComponent visualComponent;
-    private NodeData data;
+    protected Vector2 worldPosition;
+    protected GameObject nodeGO;
+    protected NodeVisualBase visualComponent;
+    protected NodeData data;
 
     public virtual void InitializeNode(NodeData data, int layoutRowNumber, int layoutColumn)
     {
@@ -47,16 +56,16 @@ public abstract class NodeBase: MonoBehaviour, INode
         SetPosition(data.milage, data.chain, layoutRowNumber, layoutColumn);
     }
 
-    public virtual void InitializeVisuals()
+    public void InitializeVisuals()
     {
-        SetNodeVisualComponent(data);
+        SetNodeVisualComponent();
     }
 
-    protected virtual void SetNodeVisualComponent(NodeData data)
+    protected virtual void SetNodeVisualComponent()
     {
-        visualComponent = nodeGO.AddComponent<NodeVisualComponent>();
+        visualComponent = nodeGO.AddComponent<NodeVisualBase>();
         visualComponent.SetNodeVisualComponent();
-        visualComponent.SetNodeText(data);
+        visualComponent.SetNodeText(this.data);
     }
 
     private void SetPosition(int milage, int chain, int layoutRow, int layoutColumn)
