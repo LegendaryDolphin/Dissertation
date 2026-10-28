@@ -88,7 +88,9 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 2
+                "layoutColumnReference": 2,
+                "signalType": "3",
+                "signalDirection": "UP"
             },
             {
                 "nodeType": "Signal",
@@ -107,7 +109,9 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 2
+                "layoutColumnReference": 2,
+                "signalType": "3",
+                "signalDirection": "UP"
             },
             {
                 "nodeType": "Junction",
@@ -172,7 +176,9 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 5
+                "layoutColumnReference": 5,
+                "signalType": "3",
+                "signalDirection": "DOWN"
             },
             {
                 "nodeType": "Signal",
@@ -191,7 +197,9 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 5
+                "layoutColumnReference": 5,
+                "signalType": "3",
+                "signalDirection": "DOWN"
             },
             {
                 "nodeType": "Station",
@@ -229,7 +237,9 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 7
+                "layoutColumnReference": 7,
+                "signalType": "3",
+                "signalDirection": "UP"
             },
             {
                 "nodeType": "Signal",
@@ -248,7 +258,9 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 7
+                "layoutColumnReference": 7,
+                "signalType": "3",
+                "signalDirection": "UP"
             },
             {
                 "nodeType": "Junction",
@@ -276,7 +288,7 @@
             {
                 "nodeType": "Junction",
                 "nodeID": 15,
-                "description": "",
+                "description": "C - West Junction",
                 "milage": 3,
                 "chain": 70,
                 "connections":[
@@ -299,7 +311,7 @@
             {
                 "nodeType": "Signal",
                 "nodeID": 16,
-                "description": "C - West Junction",
+                "description": "",
                 "milage": 3,
                 "chain": 72,
                 "connections":[
@@ -313,7 +325,9 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 10
+                "layoutColumnReference": 10,
+                "signalType": "3",
+                "signalDirection": "DOWN"
             },
             {
                 "nodeType": "Signal",
@@ -332,7 +346,9 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 10
+                "layoutColumnReference": 10,
+                "signalType": "4",
+                "signalDirection": "DOWN"
             },
             {
                 "nodeType": "Station",
