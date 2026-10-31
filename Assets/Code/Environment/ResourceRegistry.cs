@@ -38,6 +38,7 @@ public class ResourceRegistry: MonoBehaviour
         public int layoutColumnReference;
         public string signalType;
         public string signalDirection;
+        public string junctionDirection;
     }
 
     [System.Serializable]
@@ -70,9 +71,6 @@ public class ResourceRegistry: MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, "MapRegistry.json");
 
         string json = File.ReadAllText(path);
-
-        Debug.Log($"JSON contains signalType: {json.Contains("\"signalType\"")}");
-        Debug.Log($"Raw JSON:\n{json}");
 
         mapDatabase = JsonUtility.FromJson<MapDatabase>(json);
 
@@ -135,8 +133,13 @@ public class ResourceRegistry: MonoBehaviour
                 //case "Station":
                 //    break;
 
-                //case "Junction":
-                //    break;
+                case "Junction":
+                    nodeBase = CreateNode<Junction>(nodeData, data);
+                    if(nodeBase is Junction junctionInstance)
+                    {
+                        AddJunctionData(nodeData, junctionInstance);
+                    }
+                    break;
 
                 default:
                     nodeBase = CreateNode<NodeBase>(nodeData, data);
@@ -213,8 +216,6 @@ public class ResourceRegistry: MonoBehaviour
             aspect = SignalAspect.aspectRed,
         };
 
-        Debug.Log($"{data.signalType}");
-
         switch (data.signalType)
         {
             case "2":
@@ -228,11 +229,6 @@ public class ResourceRegistry: MonoBehaviour
                 break;
         }
 
-        Debug.Log(
-            $"Signal {data.nodeID}: JSON type = {data.signalType}, " +
-            $"assigned type = {signalData.signalType}"
-        );
-
         //Signals are NEVER bidirectional
         if (data.signalDirection == "UP")
         {
@@ -244,6 +240,25 @@ public class ResourceRegistry: MonoBehaviour
         }
 
         signalInstance.SetSignalData(signalData);
+    }
+
+    private void AddJunctionData(MapNode data, Junction junctionInstance)
+    {
+        JunctionData junctionData = new JunctionData
+        {
+            state = JunctionState.straight,
+        };
+
+        if(data.junctionDirection == "DOWN")
+        {
+            junctionData.junctionDirection = NodeOperatingDirection.down;
+        }
+        else
+        {
+            junctionData.junctionDirection = NodeOperatingDirection.up;
+        }
+
+        junctionInstance.SetJunctionData(junctionData);
     }
 
     private void AddToNodeRegister(NodeBase nodeToAdd, NodeData data)

@@ -134,7 +134,8 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 3
+                "layoutColumnReference": 3,
+                "junctionDirection": "DOWN"
             },
             {
                 "nodeType": "Junction",
@@ -157,7 +158,8 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 4
+                "layoutColumnReference": 4,
+                "junctionDirection": "UP"
             },
             {
                 "nodeType": "Signal",
@@ -283,7 +285,8 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 8
+                "layoutColumnReference": 8,
+                "junctionDirection": "DOWN"
             },
             {
                 "nodeType": "Junction",
@@ -306,7 +309,8 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 9
+                "layoutColumnReference": 9,
+                "junctionDirection": "UP"
             },
             {
                 "nodeType": "Signal",

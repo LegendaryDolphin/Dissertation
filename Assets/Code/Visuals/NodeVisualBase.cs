@@ -32,7 +32,7 @@ public class NodeVisualBase : MonoBehaviour
 
     public virtual void SetNodeText(NodeData data)
     {
-        textAsset.fontSize = 0.5f;
+        textAsset.fontSize = 0.6f;
         textAsset.alignment = TextAlignmentOptions.Center;
         textAsset.text = $"{data.id} - M:{data.milage} C:{data.chain}\n{data.description}";
     }

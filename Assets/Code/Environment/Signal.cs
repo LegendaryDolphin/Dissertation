@@ -19,7 +19,6 @@ public enum SignalAspect
 
 public struct SignalData
 {
-    //Signal data goes here
     public SignalType signalType;
     public SignalAspect aspect;
     public NodeOperatingDirection signalDirection;
@@ -35,11 +34,6 @@ public class Signal : NodeBase, ISignal
     private SignalData signalData;
     private SignalVisualComponent signalVisualComponent;
     private GameObject signalGO;
-
-    public override void InitializeNode(NodeData data, int layoutRowNumber, int layoutColumn)
-    {
-        base.InitializeNode(data, layoutRowNumber, layoutColumn);
-    }
 
     protected override void SetNodeVisualComponent()
     {
