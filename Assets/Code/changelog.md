@@ -34,4 +34,11 @@
 * Added implementation for signal node type.
 * Changed node instantiation in resource registry.
 * Changed JSON to support signal types and operating direction.
+* Removed text from nodes.
 
+**version 0.4.0 - 29/10/2026**
+
+* Added junction implementation.
+* Added junction visual.
+* Changed JSON to support junction operating directions.
+* Minor bug fixes.
