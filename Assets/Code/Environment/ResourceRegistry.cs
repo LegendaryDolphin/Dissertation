@@ -2,22 +2,26 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// The class where all nodes are instantiated from. Add this mono script onto a unity game object.
+/// Note: This is a singleton and therefore can have only one instance.
+/// </summary>
 public class ResourceRegistry: MonoBehaviour
 {
-    public static ResourceRegistry instance;
-
+    private static ResourceRegistry instance; //Encapsulate
     private Dictionary<int, NodeBase> nodeRegister;
     private Dictionary<string, TrackSegment> trackRegister;
-
     private MapDatabase mapDatabase;
     private MapData mapData;
 
+    //A set of maps as mapData
     [System.Serializable]
     public class MapDatabase
     {
         public MapData[] maps;
     }
 
+    //A map as a set of nodes and a map name.
     [System.Serializable]
     public class MapData
     {
@@ -25,6 +29,7 @@ public class ResourceRegistry: MonoBehaviour
         public MapNode[] nodes;
     }
 
+    //A node as a set of default attributes.
     [System.Serializable]
     public class MapNode
     {
@@ -41,6 +46,7 @@ public class ResourceRegistry: MonoBehaviour
         public string junctionDirection;
     }
 
+    //An attribute of a mapNode which describes a connection to another mapNode.
     [System.Serializable]
     public class NodeConnection
     {
@@ -48,7 +54,8 @@ public class ResourceRegistry: MonoBehaviour
         public int speed;
     }
 
-    public void Start() //Singleton
+    //Singleton
+    public void Start()
     {
         if(instance != null)
         {
@@ -66,29 +73,33 @@ public class ResourceRegistry: MonoBehaviour
         IntializeVisuals();
     }
 
+    /// <summary>
+    /// Loads all json data into a map database object from a static path.
+    /// <exception cref="System.Exception">Thrown if reading from the JSON fails or objects fail to generate properly.</exception>
+    /// </summary>
     private void LoadJSONIntoDatabase()
     {
         string path = Path.Combine(Application.streamingAssetsPath, "MapRegistry.json");
-
         string json = File.ReadAllText(path);
+        string mapToLoad = "TestMap"; //Change this for different maps at loading.
 
-        mapDatabase = JsonUtility.FromJson<MapDatabase>(json);
+        mapDatabase = JsonUtility.FromJson<MapDatabase>(json); //Attempt to make a new mapDatabase object from the JSON text.
 
         if (mapDatabase == null)
         {
-            Debug.LogError("Failed to load map database");
-            return;
+            Debug.LogError("Failed to load maps into a map database object.");
+            throw new System.Exception("Failed to load maps into a map database object.");
         }
 
         if (mapDatabase.maps == null || mapDatabase.maps.Length == 0)
         {
-            Debug.LogError("No maps found in the database");
-            return;
+            Debug.LogError("No maps found in the database.");
+            throw new System.Exception("No maps found in the map database.");
         }
 
-        foreach (MapData map in mapDatabase.maps)
+        foreach (MapData map in mapDatabase.maps) //Search for map with required name.
         {
-            if (map.mapName == "TestMap")
+            if (map.mapName == mapToLoad)
             {
                 mapData = map;
                 break;
@@ -97,25 +108,38 @@ public class ResourceRegistry: MonoBehaviour
 
         if (mapData == null)
         {
-            Debug.LogError("TestMap was not found");
-            return;
+            Debug.LogError("TestMap was not found.");
+            throw new System.Exception("TestMap was not found.");
         }
     }
 
+    /// <summary>
+    /// Reads through the mapData object and creates instance of all nodes.
+    /// Note: Must be called after JSON load.
+    /// <exception cref="System.Exception">Thrown when mapData is null or mapData.nodes is empty.</exception>
+    /// </summary>
     private void LoadNodes()
     {
         if(mapData == null)
         {
-            Debug.LogError("Map data is null. Cannot load nodes.");
-            return;
+            Debug.LogError("Map data is null. Therefore nodes cannot be loaded. Have you remembered to call LoadJSON?");
+            throw new System.Exception("Map data is null. Therefore nodes cannot be loaded. Have you remembered to call LoadJSON?");
         }
 
+        if(mapData.nodes.Length == 0)
+        {
+            Debug.LogError("The nodes attribute in map data is empty. Has the JSON been read correctly?");
+            throw new System.Exception("The nodes attribute in map data is empty. Has the JSON been read correctly?");
+        }
+
+        //Loop through all nodeData in mapData to create instance of each node.
         foreach (MapNode nodeData in mapData.nodes)
         {
-            //Create node instances here.
+            //Create node data and empty node instance variable.
             NodeData data = CreateNodeData(nodeData);
             NodeBase nodeBase;
 
+            //Create a node of specific type.
             switch (nodeData.nodeType)
             {
                 case "Default":
@@ -143,17 +167,24 @@ public class ResourceRegistry: MonoBehaviour
 
                 default:
                     nodeBase = CreateNode<NodeBase>(nodeData, data);
+                    Debug.LogWarning($"The node data had a type of: {nodeData.nodeType}, which is not recognised by the system. A default node was created instead.");
                     break;
             }
         }
     }
 
+    /// <summary>
+    /// Loads track segments based on map data and the node register.
+    /// Note: Must be called after LoadJSON and LoadNodes.
+    /// <exception cref="System.Exception">Thrown when map data is null.</exception>
+    /// <exception cref="System.Collections.Generic.KeyNotFoundException">Thrown when a node instance cannot be found.</exception>
+    /// </summary>
     private void LoadTrackSegments()
     {
         if (mapData == null)
         {
-            Debug.LogError("Map data is null. Cannot load nodes.");
-            return;
+            Debug.LogError("Map data is null. Therefore track segments cannot be loaded. Have you remembered to call LoadJSON?");
+            throw new System.Exception("Map data is null. Therefore track segments cannot be loaded. Have you remembered to call LoadJSON?");
         }
 
         foreach (MapNode nodeData in mapData.nodes)
@@ -162,20 +193,27 @@ public class ResourceRegistry: MonoBehaviour
 
             foreach(NodeConnection connection in nodeData.connections)
             {
-                if(nodeRegister.TryGetValue(connection.nodeID, out NodeBase endNode))
+                if(nodeRegister.TryGetValue(connection.nodeID, out NodeBase endNode)) //Node instance gathered here.
                 {
                     CreateTrackSegment(startNode, endNode, connection);
                 }
                 else
                 {
                     Debug.LogError($"End node with ID {connection.nodeID} not found in register.");
+                    throw new System.Collections.Generic.KeyNotFoundException($"End node with ID {connection.nodeID} not found in register.");
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Create a new struct of NodeData based on a given MapData object.
+    /// </summary>
+    /// <param name="data">The MapNode data produced from the JSON.</param>
+    /// <returns>New instance of NodeData.</returns>
     private NodeData CreateNodeData(MapNode data)
     {
+        //Set default data.
         NodeData nodeData = new NodeData
         {
             id = data.nodeID,
@@ -185,9 +223,11 @@ public class ResourceRegistry: MonoBehaviour
             type = NodeType.Default
         };
 
+        //Initialize new arrays.
         nodeData.connections = new int[data.connections.Length];
         nodeData.speeds = new int[data.connections.Length];
 
+        //Set data of arrays.
         for (int i = 0; i < data.connections.Length; i++)
         {
             nodeData.connections[i] = data.connections[i].nodeID;
@@ -197,6 +237,13 @@ public class ResourceRegistry: MonoBehaviour
         return nodeData;
     }
 
+    /// <summary>
+    /// Creates a new node instance of a given type.
+    /// </summary>
+    /// <typeparam name="T">The type of node that needs to be generated.</typeparam>
+    /// <param name="data">The MapNode data generated by the JSON.</param>
+    /// <param name="nodeData">The NodeData instance as a struct.</param>
+    /// <returns>New node instance as a base type of NodeBase.</returns>
     private NodeBase CreateNode<T>(MapNode data, NodeData nodeData) where T : NodeBase
     {
         GameObject nodeObject = new GameObject(System.Convert.ToString(data.nodeID));
@@ -209,6 +256,13 @@ public class ResourceRegistry: MonoBehaviour
         return nodeInstance;
     }
 
+    /// <summary>
+    /// Takes mapData and a node instance and creates and adds new signal data.
+    /// Note: The node instance must be a signal type and MapNode must contain signal data.
+    /// </summary>
+    /// <param name="data">The mapData generated from the JSON.</param>
+    /// <param name="signalInstance">The signal as a node instance.</param>
+    /// <exception cref="System.Exception">Thrown when the signal type is not of an expected type.</exception>
     private void AddSignalData(MapNode data, Signal signalInstance)
     {
         SignalData signalData = new SignalData
@@ -227,6 +281,9 @@ public class ResourceRegistry: MonoBehaviour
             case "4":
                 signalData.signalType = SignalType.aspect4;
                 break;
+            default:
+                Debug.LogError($"The signal type was not recognised. Check your JSON file for node: {data.nodeID}.");
+                throw new System.Exception($"The signal type was not recognised. Check your JSON file for node: {data.nodeID}.");
         }
 
         //Signals are NEVER bidirectional
@@ -234,33 +291,56 @@ public class ResourceRegistry: MonoBehaviour
         {
             signalData.signalDirection = NodeOperatingDirection.up;
         }
-        else
+        else if(data.signalDirection == "DOWN")
         {
             signalData.signalDirection = NodeOperatingDirection.down;
         }
+        else
+        {
+            Debug.LogError("The attribute signalDirection did not have UP/DOWN as a value.");
+            throw new System.Exception("The attribute signalDirection did not have UP/DOWN as a value.");
+        }
 
-        signalInstance.SetSignalData(signalData);
+        signalInstance.SetSignalData(signalData); //Update the signal data with the new data.
     }
 
+    /// <summary>
+    /// Takes mapData and a node instance and creates and adds new junction data.
+    /// Note: The node instance must be a junction type and MapNode must contain junction data.
+    /// </summary>
+    /// <param name="data">The mapData generated from the JSON.</param>
+    /// <param name="junctionInstance">The junction as a node instance.</param>
+    /// <exception cref="System.Exception">Thrown when the attribute junction direction value in JSON is not UP/DOWN.</exception>
     private void AddJunctionData(MapNode data, Junction junctionInstance)
     {
         JunctionData junctionData = new JunctionData
         {
             state = JunctionState.straight,
         };
-
+                                                                                                                                                        
         if(data.junctionDirection == "DOWN")
         {
             junctionData.junctionDirection = NodeOperatingDirection.down;
         }
-        else
+        else if(data.junctionDirection == "UP")
         {
             junctionData.junctionDirection = NodeOperatingDirection.up;
+        }
+        else
+        {
+            Debug.LogError("The attribute junctionDirection did not have UP/DOWN as a value.");
+            throw new System.Exception("The attribute junctionDirection did not have UP/DOWN as a value.");
         }
 
         junctionInstance.SetJunctionData(junctionData);
     }
 
+    /// <summary>
+    /// Tries to add a new node instance to the node register.
+    /// </summary>
+    /// <param name="nodeToAdd">The instance to try and add.</param>
+    /// <param name="data">The node data containing node id as a key.</param>
+    /// <exception cref="System.Exception">Thrown when the node id already exists in the register.</exception>
     private void AddToNodeRegister(NodeBase nodeToAdd, NodeData data)
     {
         try
@@ -269,16 +349,31 @@ public class ResourceRegistry: MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Failed to add node {data.id} to register: {e.Message}");
+            Debug.LogError($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON?");
+            throw new System.Exception($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON?");
         }
     }
 
+    /// <summary>
+    /// Creates a track segment based off two node instances and a node connection.
+    /// </summary>
+    /// <param name="startNode">The start of the connection. Cannot be null!</param>
+    /// <param name="endNode">The end of the connection. Cannot be null!</param>
+    /// <param name="connection">The connection itself and connection data.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when one of the paramters is null.</exception>
     private void CreateTrackSegment(NodeBase startNode, NodeBase endNode, NodeConnection connection)
     {
+        if(startNode == null || endNode == null || connection == null)
+        {
+            Debug.LogError("One of the given parameters was null when creating a track segment.");
+            throw new System.ArgumentNullException("One of the given parameters was null when creating a track segment.");
+        }
+
         string trackSegementID;
         int startNodeID = startNode.GetNodeID();
         int endNodeID = endNode.GetNodeID();
 
+        //Generating a track segement ID based on the two connecting nodes.
         if(startNodeID < endNodeID)
         {
             trackSegementID = $"{startNodeID}-{endNodeID}";
@@ -308,6 +403,7 @@ public class ResourceRegistry: MonoBehaviour
             }
             else
             {
+                //Connection is down.
                 data.downSpeed = connection.speed;
                 data.direction = TrackDirection.down;
             }
@@ -320,6 +416,7 @@ public class ResourceRegistry: MonoBehaviour
         }
         else
         {
+            //Edit the track segment if it already exists to make it bi-directional.
             TrackSegment existingSegment = trackRegister[trackSegementID];
             TrackData data = existingSegment.GetTrackData();
 
@@ -338,6 +435,10 @@ public class ResourceRegistry: MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loops through both the track register and node register and calls initialization of visuals on all instances.
+    /// Note: Should only be called once all instances have loaded correctly.
+    /// </summary>
     private void IntializeVisuals()
     {
         foreach(var node in nodeRegister.Values)
@@ -351,6 +452,12 @@ public class ResourceRegistry: MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tries to add a track instance to the track register.
+    /// </summary>
+    /// <param name="segment">The track instance to add.</param>
+    /// <param name="data">The data of that track instance.</param>
+    /// <exception cref="System.Exception">Thrown when the track id already exists as a key in the register.</exception>
     private void AddTrackToRegister(TrackSegment segment, TrackData data)
     {
         try
@@ -359,10 +466,16 @@ public class ResourceRegistry: MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Failed to add track segment {data.trackID} to register: {e.Message}");
+            Debug.LogError($"The key for track segment {data.trackID} already exists. Is there an error in your JSON?");
+            throw new System.Exception($"The key for track segment {data.trackID} already exists. Is there an error in your JSON?");
         }
     }
 
+    /// <summary>
+    /// Gets a node off a given id as an integer.
+    /// </summary>
+    /// <param name="nodeID">The node id of the node to be retrieved.</param>
+    /// <returns>The node as an instance. Can return null!</returns>
     public NodeBase GetNodeByID(int nodeID)
     {
         if (nodeRegister.TryGetValue(nodeID, out NodeBase node))
@@ -376,6 +489,10 @@ public class ResourceRegistry: MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A singleton method which retrieves the instance of the ResourceRegistry.
+    /// </summary>
+    /// <returns>The resource registries instance.</returns>
     public static ResourceRegistry GetInstance()
     {
         return instance;
