@@ -44,6 +44,9 @@ public class ResourceRegistry: MonoBehaviour
         public string signalType;
         public string signalDirection;
         public string junctionDirection;
+        public string stationName;
+        public int platform;
+        public string platformPlacement;
     }
 
     //An attribute of a mapNode which describes a connection to another mapNode.
@@ -154,8 +157,13 @@ public class ResourceRegistry: MonoBehaviour
                     }
                     break;
 
-                //case "Station":
-                //    break;
+                case "Station":
+                    nodeBase = CreateNode<Station>(nodeData, data);
+                    if(nodeBase is Station stationInstance)
+                    {
+                        AddStationData(nodeData, stationInstance);
+                    }
+                    break;
 
                 case "Junction":
                     nodeBase = CreateNode<Junction>(nodeData, data);
@@ -333,6 +341,37 @@ public class ResourceRegistry: MonoBehaviour
         }
 
         junctionInstance.SetJunctionData(junctionData);
+    }
+
+    /// <summary>
+    /// Adds station data to a station instance based on mapData.
+    /// Note: The node instance must be a station type and MapNode must contain station data.
+    /// </summary>
+    /// <param name="data">The mapData generated from the JSON.</param>
+    /// <param name="stationInstance">The station as a node instance.</param>
+    /// <exception cref="System.Exception">Thrown when the attribute platformPlacement value in JSON is not UP/DOWN.</exception>"
+    private void AddStationData(MapNode data, Station stationInstance)
+    {
+        StationData stationData = new StationData
+        {
+            stationName = data.stationName,
+            platform = data.platform
+        };
+
+        switch (data.platformPlacement)
+        {
+            case "UP":
+                stationData.platformPlacementSide = NodeOperatingDirection.up;
+                break;
+            case "DOWN":
+                stationData.platformPlacementSide = NodeOperatingDirection.down;
+                break;
+            default:
+                Debug.LogError("The attribute platformPlacement did not have UP/DOWN as a value.");
+                throw new System.Exception("The attribute platformPlacement did not have UP/DOWN as a value.");
+        }
+
+        stationInstance.SetStationData(stationData);
     }
 
     /// <summary>

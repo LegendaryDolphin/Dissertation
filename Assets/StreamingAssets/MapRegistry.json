@@ -50,7 +50,10 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 1
+                "layoutColumnReference": 1,
+                "stationName": "A",
+                "platform": 1,
+                "platformPlacement": "UP"
             },
             {
                 "nodeType": "Station",
@@ -69,7 +72,10 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 1
+                "layoutColumnReference": 1,
+                "stationName": "A",
+                "platform": 2,
+                "platformPlacement": "DOWN"
             },
             {
                 "nodeType": "Signal",
@@ -220,7 +226,10 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 6
+                "layoutColumnReference": 6,
+                "stationName": "B",
+                "platform": 1,
+                "platformPlacement": "UP"
             },
             {
                 "nodeType": "Signal",
@@ -371,7 +380,10 @@
                     }
                 ],
                 "layoutRowReference": 0,
-                "layoutColumnReference": 11
+                "layoutColumnReference": 11,
+                "stationName": "C",
+                "platform": 1,
+                "platformPlacement": "UP"
             },
             {
                 "nodeType": "Station",
@@ -390,7 +402,10 @@
                     }
                 ],
                 "layoutRowReference": 1,
-                "layoutColumnReference": 11
+                "layoutColumnReference": 11,
+                "stationName": "C",
+                "platform": 2,
+                "platformPlacement": "DOWN"
             },
             {
                 "nodeType": "Default",

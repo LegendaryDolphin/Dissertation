@@ -52,3 +52,11 @@
 
 * Added documentation to current visual classes.
 * Added throws to error prone methids along with updated Unity debug messages for visual classes.
+
+**version 0.5.0 - 07/11/2026**
+
+* Added station node type to environment.
+* Added station node visual componenet.
+* Added platform placement and station data to JSON.
+* Added documentation to station environment and visual classes.
+* Added throws to error prone methods along with updated Unity debug messages for station environment, visual classes and resource registry.
