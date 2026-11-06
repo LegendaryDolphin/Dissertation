@@ -46,4 +46,9 @@
 **version 0.4.1 - 05/11/2026**
 
 * Added documentation to current environment classes.
-* Added throws to error prone methods along with updated Unity debug messages.
+* Added throws to error prone methods along with updated Unity debug messages for environment classes.
+
+**version 0.4.2 - 06/11/2026**
+
+* Added documentation to current visual classes.
+* Added throws to error prone methids along with updated Unity debug messages for visual classes.

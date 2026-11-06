@@ -1,6 +1,9 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
+/// <summary>
+/// A base for all signal visual component types.
+/// A type of node visual component.
+/// </summary>
 public class SignalVisualComponent : NodeVisualBase
 {
     [SerializeField] protected GameObject bulbRenderers;
@@ -25,6 +28,9 @@ public class SignalVisualComponent : NodeVisualBase
         error = new Color(1, 0, 1, 1);
     }
 
+    /// <summary>
+    /// Sets a signals base visual settings.
+    /// </summary>
     public override void SetNodeVisualComponent()
     {
         base.SetNodeVisualComponent();
@@ -38,6 +44,10 @@ public class SignalVisualComponent : NodeVisualBase
         operatingArrowRenderer.color = grey;
     }
 
+    /// <summary>
+    /// Sets the node operating direction arrow for the signal.
+    /// </summary>
+    /// <param name="data">Signal data containing direction info.</param>
     public void SetArrow(SignalData data)
     {
         if(data.signalDirection == NodeOperatingDirection.up)
@@ -52,6 +62,10 @@ public class SignalVisualComponent : NodeVisualBase
         }
     }
 
+    /// <summary>
+    /// Base method for setting a signal aspect. This must have an override implementation.
+    /// </summary>
+    /// <param name="aspect"></param>
     public virtual void SetAspect(SignalAspect aspect)
     {
         Debug.LogError("Implementation does not exist!");

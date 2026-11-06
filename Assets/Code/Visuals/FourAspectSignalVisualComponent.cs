@@ -1,6 +1,8 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
+/// <summary>
+/// A four aspect signal which extends from a signal visual component.
+/// </summary>
 public class FourAspectSignalVisualComponent : SignalVisualComponent
 {
     [SerializeField] private SpriteRenderer topBulb;
@@ -8,6 +10,9 @@ public class FourAspectSignalVisualComponent : SignalVisualComponent
     [SerializeField] private SpriteRenderer lowerMiddleBulb;
     [SerializeField] private SpriteRenderer bottomBulb;
 
+    /// <summary>
+    /// Sets node visual component settings for four aspect signals, with base calls.
+    /// </summary>
     public override void SetNodeVisualComponent()
     {
         base.SetNodeVisualComponent();
@@ -15,6 +20,11 @@ public class FourAspectSignalVisualComponent : SignalVisualComponent
         bulbRenderers.transform.position += new Vector3(0f, 0.2f, 0f);
     }
 
+    /// <summary>
+    /// Sets the signal aspect based on its four aspect implementation.
+    /// </summary>
+    /// <param name="aspect">The new aspect.</param>
+    /// <exception cref="System.Exception">Thrown when a signal is given an unsupported aspect.</exception>
     public override void SetAspect(SignalAspect aspect)
     {
         switch (aspect)
@@ -49,7 +59,7 @@ public class FourAspectSignalVisualComponent : SignalVisualComponent
                 lowerMiddleBulb.color = error;
                 bottomBulb.color = error;
                 Debug.LogError("Signal visual recieved an incorrect aspect type");
-                break;
+                throw new System.Exception("The signal aspect given is not supported by this signal.");
         }
     }
 }

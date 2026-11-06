@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// A junction visual component which extends a node visual base.
+/// Represents a junction instance visually.
+/// </summary>
 public class JunctionVisualComponent : NodeVisualBase
 {
     [SerializeField] private GameObject junctionObject;
@@ -7,17 +11,21 @@ public class JunctionVisualComponent : NodeVisualBase
     private Vector2 diversionNodePosition;
     private Vector2 straightNodePosition;
 
+    /// <summary>
+    /// When given junction data, set junction pointer positions by accessing the resource registry.
+    /// Resource registry must exist.
+    /// </summary>
+    /// <param name="junctionData"></param>
     public void SetJunctionPositions(JunctionData junctionData)
     {
         diversionNodePosition = ResourceRegistry.GetInstance().GetNodeByID(junctionData.diversionNodeId).GetPosition();
         straightNodePosition = ResourceRegistry.GetInstance().GetNodeByID(junctionData.straightNodeId).GetPosition();
-
-        //if(junctionData.junctionDirection == NodeOperatingDirection.down)
-        //{
-        //    junctionObject.transform.position += new Vector3(-0.24f, 0f, 0f);
-        //}
     }
 
+    /// <summary>
+    /// Sets a junctions direction given new junction data.
+    /// </summary>
+    /// <param name="junctionData">The new junction data.</param>
     public void SetJunction(JunctionData junctionData)
     {
         Vector2 targetPosition;

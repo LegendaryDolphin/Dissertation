@@ -1,14 +1,19 @@
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
+/// <summary>
+/// A track visual component which represents a track instance visually.
+/// </summary>
 public class TrackSegmentVisualComponent : MonoBehaviour
 {
     private SpriteRenderer trackSegmentRenderer;
     private BoxCollider2D trackSegmentCollider;
     private TextMeshPro textAsset;
 
+    /// <summary>
+    /// Initalises all default values of the visual component. Called once!
+    /// </summary>
+    /// <param name="data"></param>
     public void SetTrackSegmentVisualComponent(TrackData data)
     {
         GameObject textObject = new GameObject("TrackText");
@@ -33,6 +38,10 @@ public class TrackSegmentVisualComponent : MonoBehaviour
         SetTrackText(data);
     }
 
+    /// <summary>
+    /// Sets the track text from track data.
+    /// </summary>
+    /// <param name="data">The tracks data.</param>
     private void SetTrackText(TrackData data)
     {
         string text;
@@ -55,6 +64,10 @@ public class TrackSegmentVisualComponent : MonoBehaviour
         textAsset.text = text;
     }
 
+    /// <summary>
+    /// Calculates the track length between its two nodes and changes the size of the track visually.
+    /// </summary>
+    /// <param name="data">The track data.</param>
     private void SetTrackLength(TrackData data)
     {
         ResourceRegistry resourceRegistry = ResourceRegistry.GetInstance();
@@ -68,12 +81,14 @@ public class TrackSegmentVisualComponent : MonoBehaviour
         trackSegmentCollider.size = new Vector2(length, 0.1f);
     }
 
+    //Unity function, changes the visual to a different color on mouse hover.
     private void OnMouseEnter()
     {
         textAsset.enabled = true;
         trackSegmentRenderer.color = Color.yellow;
     }
 
+    //Unity function, changes the visual to default color on mouse hover exit.
     private void OnMouseExit()
     {
         textAsset.enabled = false;
