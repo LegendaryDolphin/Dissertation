@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "name": "UserInputActions",
+    "maps": [
+        {
+            "name": "UserInputActionMap",
+            "id": "ea07bb8c-219a-4e55-a5cf-615bc64f264a",
+            "actions": [
+                {
+                    "name": "CameraMoveMouseKey",
+                    "type": "Button",
+                    "id": "5a7573ee-e314-470d-82d6-e17f181a4944",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraMouseDelta",
+                    "type": "Value",
+                    "id": "ee39acd0-4d83-493a-b333-1039e246e7de",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "04ee9cb4-be81-4f68-a845-ab498a595a17",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3feea808-1b7b-4b5f-af00-3984e3dce015",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMoveMouseKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a49482c-df82-4db3-be33-ad9ee1db598c",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMouseDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54cc4cdb-47b9-4514-a07e-9cb934e7fc34",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

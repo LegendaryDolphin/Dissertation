@@ -60,3 +60,9 @@
 * Added platform placement and station data to JSON.
 * Added documentation to station environment and visual classes.
 * Added throws to error prone methods along with updated Unity debug messages for station environment, visual classes and resource registry.
+
+**version 0.6.0 - 21/11/2026**
+
+* Added Unity Input System for camera controls.
+* Added camera controls for movement and zooming.
+* Added documentation to camera class.
