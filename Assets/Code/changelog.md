@@ -66,3 +66,11 @@
 * Added Unity Input System for camera controls.
 * Added camera controls for movement and zooming.
 * Added documentation to camera class.
+
+**version 0.7.0 - 22/11/2026**
+
+* Added Simulation Clock.
+* Added UI for Simulation Clock control.
+	* Pause / Resume.
+	* Time multipler controls for up to x20.
+	* Simulation clock text field.
