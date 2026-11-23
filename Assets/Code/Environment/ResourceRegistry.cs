@@ -388,8 +388,8 @@ public class ResourceRegistry: MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON?");
-            throw new System.Exception($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON?");
+            Debug.LogError($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON? ERR: {e}.");
+            throw new System.Exception($"Failed to add the node of id {data.id} to the register as the key already exists. Have you made a typo in the JSON? ERR: {e}.");
         }
     }
 

@@ -74,3 +74,13 @@
 	* Pause / Resume.
 	* Time multipler controls for up to x20.
 	* Simulation clock text field.
+
+**version 0.8.0 - 23/11/2026**
+
+* Added Timetable.json data structure.
+* Added reading of timetable json to C# structs.
+* Added RoutePattern data structures (structs).
+* Added Route Resource Manager.
+* Added documnetation to Simulation Clock UI classes.
+* Added documnetation to RoutePattern structs and manager class.
+* Minor bug fix in Resource Registry class.
