@@ -84,3 +84,4 @@
 * Added documnetation to Simulation Clock UI classes.
 * Added documnetation to RoutePattern structs and manager class.
 * Minor bug fix in Resource Registry class.
+* Removed unncessary package in simulation clock class.
