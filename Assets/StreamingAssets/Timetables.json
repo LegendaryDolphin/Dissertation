@@ -1,0 +1,42 @@
+{
+    "Maps":[
+        {
+            "Name": "TestMap",
+            "Routes":[
+                {
+                    "RouteName": "AC",
+                    "Forward":{
+                        "Origin": "A",
+                        "Destination": "C",
+                        "Entries":[
+                            {"Station": "A", "Platform": "1", "Arrival": "00:00:00", "Pass": "", "Departure": "00:02:00"},
+                            {"Station": "B", "Platform": "1", "Arrival": "00:15:00", "Pass": "", "Departure": "00:17:00"},
+                            {"Station": "C", "Platform": "1", "Arrival": "00:28:00", "Pass": "", "Departure": ""}
+                        ],
+                        "DailyTimes":[
+                            {"Time": "09:00:00"}, 
+                            {"Time": "09:30:00"}, 
+                            {"Time": "10:00:00"},
+                            {"Time": "10:30:00"}
+                        ]
+                    },
+                    "Reverse":{
+                        "Origin": "C",
+                        "Destination": "A",
+                        "Entries":[
+                            {"Station": "C", "Platform": "1", "Arrival": "00:00:00", "Pass": "", "Departure": "00:02:00"},
+                            {"Station": "A", "Platform": "1", "Arrival": "00:28:00", "Pass": "", "Departure": ""}
+                        ],
+                        "DailyTimes":[
+                            {"Time": "09:00:00"}, 
+                            {"Time": "09:30:00"}, 
+                            {"Time": "10:00:00"},
+                            {"Time": "10:30:00"}
+                        ]
+                    },
+                    "MaxTrains": 2
+                }
+            ]
+        }
+    ]
+}
