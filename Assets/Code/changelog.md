@@ -85,3 +85,7 @@
 * Added documnetation to RoutePattern structs and manager class.
 * Minor bug fix in Resource Registry class.
 * Removed unncessary package in simulation clock class.
+
+**version 0.8.1 - 24/11/2026**
+
+* Added scene to Git.
