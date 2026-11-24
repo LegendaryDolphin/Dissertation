@@ -57,10 +57,9 @@ public class ResourceRegistry: MonoBehaviour
         public int speed;
     }
 
-    //Singleton
-    public void Start()
+    public void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(instance);
         }
@@ -69,7 +68,14 @@ public class ResourceRegistry: MonoBehaviour
 
         nodeRegister = new Dictionary<int, NodeBase>();
         trackRegister = new Dictionary<string, TrackSegment>();
+    }
 
+    /// <summary>
+    /// To be called by global manager only.
+    /// Loads the map.
+    /// </summary>
+    public void InitaliseMap()
+    {
         LoadJSONIntoDatabase();
         LoadNodes();
         LoadTrackSegments();

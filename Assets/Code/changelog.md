@@ -89,3 +89,16 @@
 **version 0.8.1 - 24/11/2026**
 
 * Added scene to Git.
+
+**version 0.9.0 - 24/11/2026**
+
+* Added singleton behaviour to RouteResourceManager.
+* Added time addition method to TimetableSlotData
+* Added timetable class, (is an instance of a single timetable / schedule).
+* Added timetable resource manager.
+* Added global resource manager.
+* Added toString helper in TimeSlotData.
+* Added init methods to all singletons, now called from global manager.
+* Added and cleaned C# documentation.
+
+(Only debug messages of timetable data exist in this version. Timetable addition methods need checking.)

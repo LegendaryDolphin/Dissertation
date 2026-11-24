@@ -9,8 +9,26 @@ public class RouteResourceManager : MonoBehaviour
 {
     private RouteData[] routes;
     [SerializeField] private string fileName = "Timetables.json";
+    private static RouteResourceManager instance;
 
-    private void Start()
+    //Singleton
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            RouteResourceManager.instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    /// <summary>
+    /// To be called by global manager only.
+    /// Loads routes from file into route resource manager.
+    /// </summary>
+    public void InitaliseRouteResources()
     {
         LoadRoutesIntoRouteManager("TestMap");
     }
@@ -143,7 +161,8 @@ public class RouteResourceManager : MonoBehaviour
             {
                 hrs = 99,
                 mins = 99,
-                secs = 99
+                secs = 99,
+                slotCondition = TimeSlotCondition.emptyTime
             };
         }
 
@@ -156,6 +175,7 @@ public class RouteResourceManager : MonoBehaviour
                 hrs = Convert.ToInt32(hms[0]),
                 mins = Convert.ToInt32(hms[1]),
                 secs = Convert.ToInt32(hms[2]),
+                slotCondition = TimeSlotCondition.loggedTime
             };
         }
         catch(Exception e)
@@ -163,5 +183,15 @@ public class RouteResourceManager : MonoBehaviour
             Debug.LogError($"The method attempted to convert a string time to individual components. Check the JSON file for colons. ERR: {e}");
             throw new ArgumentException($"The method attempted to convert a string time to individual components. Check the JSON file for colons. ERR: {e}");
         }
+    }
+
+    public RouteData[] GetAllRoutes()
+    {
+        return routes;
+    }
+
+    public static RouteResourceManager GetInstance()
+    {
+        return RouteResourceManager.instance;
     }
 }
